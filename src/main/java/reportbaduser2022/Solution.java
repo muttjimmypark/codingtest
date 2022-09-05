@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 class Solution {
+    // 2022 블라인드 - 신고 결과 받기
     // 220905 13:50
     // 14:23
     // 15:12
