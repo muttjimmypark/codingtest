@@ -9,7 +9,7 @@ class Solution {
     // 2022 블라인드 - 신고 결과 받기
     // 220905 13:50
     // 14:23
-    // 15:12
+    // 15:12 (82분)
 
     public int[] solution(String[] id_list, String[] report, int k) {
 

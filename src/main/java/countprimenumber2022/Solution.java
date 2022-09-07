@@ -11,7 +11,7 @@ class Solution {
     // 18:46 - 20:20
     // 22:25 - 22:38 1차 풀이완, 테스트 1,11 런타임에러 테스트 14,16 실패
     // 22:43 isPrimeNumber가 Long타입 다루도록 하여 1,11 해결
-    // 22:45 풀이 완
+    // 22:45 풀이 완 (136분)
 
 
     public int solution(int n, int k) {
