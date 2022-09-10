@@ -1,9 +1,5 @@
 package equalizetwoques2022intern;
 
-// 2022 블라인드인턴 - 두 큐 합 같게 만들기
-// 220907 20:10 - 21:58
-// 220908 15:55 -
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,100 +1,61 @@
 package equalizetwoques2022intern;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 class Solution2 {
 
-    //    int answer = -2;
-    int queSize = 0;
-    long allSum = 0L;
-    List<Integer> gq1;
-    List<Integer> gq2;
-
     public int solution(int[] queue1, int[] queue2) {
-//        if (queue1.length != queue2.length) {
-//            throw new Exception();
-//        }
-        gq1 = new ArrayList<>();
-        gq2 = new ArrayList<>();
 
-        queSize = queue1.length;
-        for (int i = 0; i < queSize; i++) {
-            gq1.add(queue1[i]);
-            gq2.add(queue2[i]);
-            allSum += queue1[i];
-            allSum += queue2[i];
+        long q1sum = Arrays.stream(queue1).sum();
+        long q2sum = Arrays.stream(queue2).sum();
+        if (q1sum == q2sum) {
+            return 0;
         }
-
-        // 한 원소의 값이 나머지 원소들의 총합보다 크면 중단
-//        if (!validationElements()) {
-//            return -1;
-//        }
-
-        // 원소의 총 합이 반으로 나눠떨어지지 않으면 중단
-        if ((allSum % 2) != 0) {
+        if ((q1sum + q2sum) < Math.max(Arrays.stream(queue1).max().getAsInt(), Arrays.stream(queue2).max().getAsInt())) {
+            return -1;
+        }
+        if ((q1sum + q2sum) % 2 != 0) {
             return -1;
         }
 
-        // 중단조건 검토 끝났으니 큐섞기 시작
-        // 최대로 나올 수 있는 이동 횟수 : (queSize * 2) <--아니다
-
-
-
-//        for (int moveCase = 0; moveCase < (queSize * 2); moveCase++) {
-//            for (int bDeque = 0; bDeque <= moveCase; bDeque++) {
-//                int aDeque = moveCase - bDeque;
-//
-//                // 실현가능한 횟수인지 검증
-//                if ((queSize - aDeque + bDeque < 1)
-//                        | (queSize - bDeque + aDeque < 1)) {
-//                    continue;
-//                }
-//
-//                // 실제 섞어보기
-//                if (mixAndCalculate(aDeque, bDeque)) {
-//                    return moveCase;
-//                }
-//            }
+        int queLength = queue1.length;
+//        if (queLength != queue2.length) {
+//            throw new Exception();
 //        }
+        List<Integer> uniteQue = new ArrayList<>();
+        if (q1sum < q2sum) {
+            for (int i = 0; i < queLength; i++) {
+                uniteQue.add(queue1[i]);
+            }
+            for (int i = 0; i < queLength; i++) {
+                uniteQue.add(queue2[i]);
+            }
+        }
+        if (q2sum < q1sum) {
+            for (int i = 0; i < queLength; i++) {
+                uniteQue.add(queue2[i]);
+            }
+            for (int i = 0; i < queLength; i++) {
+                uniteQue.add(queue1[i]);
+            }
+        }
 
+        long goal = (q1sum + q2sum) / 2;
+        for (int subStart = 0; subStart < queLength * 2; subStart++) {
+            for (int subEnd = subStart; subEnd < queLength * 2; subEnd++) {
+                long subSum = uniteQue.subList(subStart, subEnd).stream().mapToLong(Long::valueOf).sum();
+                if (goal < subSum) {
+                    break;
+                }
+                if (goal == subSum) {
+                    return subStart + subEnd - queLength;
+                }
+            }
+        }
+
+        System.out.println("not found");
         return -1;
-    }
-
-//    private boolean validationElements() {
-//        for (int i = 0; i < queSize; i++) {
-//            if (gq1[i] > (allSum / 2)) {
-//                return false;
-//            }
-//            if (gq2[i] > (allSum / 2)) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-
-    private boolean mixAndCalculate(int aDeque, int bDeque) {
-        List<Integer> resultA = new ArrayList<>();
-        for (int i = 0; i < queSize; i++) {
-            resultA.add(gq1.get(i));
-        }
-
-        if (aDeque >= queSize) {
-            for (int i = 0; i < bDeque; i++) {
-                resultA.add(gq2.get(i));
-            }
-            for (int i = 0; i < aDeque; i++) {
-                resultA.remove(0);
-            }
-        } else {
-            for (int i = 0; i < aDeque; i++) {
-                resultA.remove(0);
-            }
-            for (int i = 0; i < bDeque; i++) {
-                resultA.add(gq2.get(i));
-            }
-        }
-
-        return resultA.stream().mapToLong(Long::valueOf).sum() == (allSum / 2);
     }
 }
