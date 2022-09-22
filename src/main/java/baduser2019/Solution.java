@@ -8,10 +8,12 @@ import java.util.*;
 class Solution {
 
     boolean[][] banCases;
+    List<Integer> marked;
 
     public int solution(String[] user_id, String[] banned_id) {
 
         banCases = new boolean[banned_id.length][user_id.length];
+        marked = new ArrayList<>();
 
         for (int i = 0; i < banned_id.length; i++) {
             Arrays.fill(banCases[i], false);
@@ -49,8 +51,10 @@ class Solution {
         if (start == end) {
             for (int i = 0; i < banCases[end].length; i++) {
                 if (banCases[end][i] == true
-                        && (mark & (1 << i)) == 0) {
+                        && (mark & (1 << i)) == 0
+                        && !marked.contains(mark | (1 << i))) {
                     result++;
+                    marked.add(mark | (1 << i));
                 }
             }
             return result;
