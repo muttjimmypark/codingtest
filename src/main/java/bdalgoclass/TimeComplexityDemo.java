@@ -35,6 +35,10 @@ public class TimeComplexityDemo {
         }
 
         return false;
+
+        /**
+         * 시간복잡도가 O(N)으로 줄었다
+         */
     }
 
     public static int func1(int n) {
