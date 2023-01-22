@@ -1,8 +1,40 @@
 package bdalgoclass;
 
+import java.util.Arrays;
+import java.util.Scanner;
+
 public class TimeComplexityDemo {
     public static void main(String[] args) {
 
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("func2 new");
+
+        System.out.print("type N : ");
+        int n = sc.nextInt();
+
+        int[] arr = new int[n];
+        System.out.print("fill arrays with blank : ");
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+        }
+
+        System.out.println(func2new(arr));
+    }
+
+    private static boolean func2new(int[] arr) {
+        boolean[] flag = new boolean[101];
+        Arrays.fill(flag, false);
+
+        for (int e : arr) {
+            if (flag[100 - e]) {
+                return true;
+            }
+
+            flag[e] = true;
+        }
+
+        return false;
     }
 
     public static int func1(int n) {
