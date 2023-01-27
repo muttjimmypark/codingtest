@@ -10,7 +10,8 @@ public class Main {
     static int n;
     static int[] queenIdx;
     static boolean[] colFlag;
-    static boolean[] diagFlag;
+    static boolean[] riseFlag;
+    static boolean[] downFlag;
     static int count;
 
     public static void main(String[] args) throws IOException {
@@ -19,10 +20,12 @@ public class Main {
         n = Integer.parseInt(br.readLine());
         queenIdx = new int[n];
         colFlag = new boolean[n];
-        diagFlag = new boolean[n + n + 1];
+        riseFlag = new boolean[n * 2 + 1];
+        downFlag = new boolean[n * 2 + 1];
         Arrays.fill(queenIdx, -1);
         Arrays.fill(colFlag, false);
-        Arrays.fill(diagFlag, false);
+        Arrays.fill(riseFlag, false);
+        Arrays.fill(downFlag, false);
         count = 0;
 
         solution(0);
@@ -37,23 +40,17 @@ public class Main {
 
         for (int i = 0; i < n; i++) {
             if (!colFlag[i]
-                    && differDiag(row, i)) {
+                    && !riseFlag[i + row + 2]
+                    && !downFlag[i - row + n]) {
                 colFlag[i] = true;
-                diagFlag[i + row + 2] = true;
-                diagFlag[i - row] = true;
+                riseFlag[i + row + 2] = true;
+                downFlag[i - row + n] = true;
                 queenIdx[row] = i;
                 solution(row + 1);
                 colFlag[i] = false;
-                diagFlag[i + row + 2] = false;
-                diagFlag[i - row] = false;
+                riseFlag[i + row + 2] = false;
+                downFlag[i - row + n] = false;
             }
         }
     }
-
-    //colflag를 2차원으로 만들어서 diagol 판독방법 다시
 }
-/**
- * 말이 놓인 인덱스들을 피해야 (직선)
- * 또는
- * 당장 윗말의 대각선 (대각선, 2줄 넘어가면 다른말 인덱스등과 겹쳐)
- */
