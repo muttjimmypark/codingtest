@@ -67,7 +67,11 @@ public class Main {
         //리턴 -2
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                result[unitResults[i][j] + 1]++;
+                int tmp = unitResults[i][j];
+                if (tmp >= -1
+                        && tmp <= 1) {
+                    result[tmp + 1]++;
+                }
             }
         }
         return -2;
