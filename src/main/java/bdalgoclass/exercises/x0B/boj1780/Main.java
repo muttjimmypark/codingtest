@@ -36,44 +36,29 @@ public class Main {
         }
     }
 
-    private static int solution(int input, int x, int y) {
-        if (input == 1) {
-            return arr[x][y];
+    private static void solution(int input, int x, int y) {
+
+        if (validAllSame(input, x, y)) {
+            result[arr[x][y] + 1]++;
+            return;
         }
 
         int unitSize = input / 3;
-        int[][] unitResults = new int[3][3];
-        boolean nowAllSame = true;
-
-        for (int i = 0; i < 3; i++) {
-
-            Arrays.fill(unitResults[i], -2);
-
-            for (int j = 0; j < 3; j++) {
-                unitResults[i][j] = solution(unitSize, x + (i * unitSize), y + (j * unitSize));
-                nowAllSame = nowAllSame && (unitResults[i][j] == unitResults[0][0]);
-            }
-        }
-
-        if (nowAllSame) {
-            if (input == n) {
-                result[unitResults[0][0] + 1]++;
-            }
-
-            return unitResults[0][0];
-        }
-
-        //아니니까 각칸이 결과배열에 합산되게
-        //리턴 -2
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                int tmp = unitResults[i][j];
-                if (tmp >= -1
-                        && tmp <= 1) {
-                    result[tmp + 1]++;
+                solution(unitSize, x + (i * unitSize), y + (j * unitSize));
+            }
+        }
+    }
+
+    private static boolean validAllSame(int input, int x, int y) {
+        for (int i = x; i < x + input; i++) {
+            for (int j = y; j < y + input; j++) {
+                if (arr[x][y] != arr[i][j]) {
+                    return false;
                 }
             }
         }
-        return -2;
+        return true;
     }
 }
