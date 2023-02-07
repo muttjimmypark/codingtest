@@ -38,12 +38,14 @@ public class Main {
 
             if (charArr[i] == '-') {
                 if (idx > 0) {
-                    ll.remove(idx--);
+                    idx--;
+                    ll.remove(idx);
                 }
                 continue;
             }
 
-            ll.add(idx++, charArr[i]);
+            ll.add(idx, charArr[i]);
+            idx++;
         }
 
         StringBuilder result = new StringBuilder();
