@@ -10,7 +10,8 @@ import java.util.Queue;
 public class Main {
 
     static char[][] gyosil;
-    static int[] crew;
+    static int[] xCrew;
+    static int[] yCrew;
     static boolean[] visited;
     static int result = 0;
 
@@ -22,9 +23,11 @@ public class Main {
             gyosil[i] = br.readLine().toCharArray();
         }
 
-        crew = new int[7];
+        xCrew = new int[7];
+        yCrew = new int[7];
         visited = new boolean[7];
-        Arrays.fill(crew, 25);
+        Arrays.fill(xCrew, 5);
+        Arrays.fill(yCrew, 5);
         Arrays.fill(visited, false);
 
         makeCrew(0, 0, 0);
@@ -43,18 +46,20 @@ public class Main {
         }
 
         for (int i = start; i < 25; i++) {
-            crew[idx] = i;
+            xCrew[idx] = i / 5;
+            yCrew[idx] = i % 5;
 
             makeCrew(idx + 1, i + 1,
-                    gyosil[i / 5][i % 5] == 'Y' ? yCount + 1 : yCount);
+                    gyosil[xCrew[idx]][yCrew[idx]] == 'Y' ? yCount + 1 : yCount);
         }
     }
 
     private static void validCrew() {
         Queue<Pair> queue = new LinkedList<>();
 
+        Arrays.fill(visited, false);
         int count = 1;
-        queue.add(new Pair(crew[0] / 5, crew[0] % 5));
+        queue.add(new Pair(xCrew[0], yCrew[0]));
         visited[0] = true;
 
         while (!queue.isEmpty()) {
@@ -65,7 +70,6 @@ public class Main {
             for (int i = 0; i < 4; i++) {
                 int xTmp = now.x + xSeek[i];
                 int yTmp = now.y + ySeek[i];
-                int tmp = (xTmp * 5) + yTmp;
 
                 if (invalidIndex(xTmp, yTmp)) {
                     continue;
@@ -73,13 +77,15 @@ public class Main {
 
                 for (int j = 0; j < 7; j++) {
                     if (!visited[j]
-                            && crew[j] == tmp) {
+                            && xCrew[j] == xTmp
+                            && yCrew[j] == yTmp) {
                         queue.add(new Pair(xTmp, yTmp));
                         visited[j] = true;
                         count++;
                     }
                 }
             }
+
         }
 
         if (count == 7) {
