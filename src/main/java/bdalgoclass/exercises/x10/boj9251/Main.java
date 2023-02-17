@@ -5,6 +5,8 @@ package bdalgoclass.exercises.x10.boj9251;
  * 1. 메모를 어떻게 구성할지
  * 2. 실제 주어지는 규칙성이 메모 안에서 어떻게 발현되는지
  * 3. 그 원리를 통해 역추적을 구현
+ *
+ * https://st-lab.tistory.com/139
  */
 
 import java.io.BufferedReader;
