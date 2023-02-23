@@ -13,6 +13,11 @@ class Solution {
         }
 
         result = new int[n];
+        if (s == n) {
+            Arrays.fill(result, 1);
+            return result;
+        }
+
         Arrays.fill(result, 0);
         idx = 0;
 
