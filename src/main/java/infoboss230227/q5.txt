@@ -1,0 +1,6 @@
+SELECT b.name as BRANCE_NAME, e.id as EMPLOYEE_ID, e.name as EMPLOYEE_NAME
+from employees as e
+LEFT JOIN branches as b
+on e.branch_id = b.id
+where salary < 250
+order by e.id;
