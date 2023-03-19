@@ -6,24 +6,50 @@ import java.io.InputStreamReader;
 
 public class Main {
 
+    static int n;
     static boolean[][] input;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int n = Integer.parseInt(br.readLine());
+        n = Integer.parseInt(br.readLine());
+        input = new boolean[n][n];
 
-        System.out.println(sol(0, 0, input));
-    }
-
-    private static int sol(int x, int y, boolean[][] input) {
-
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
-                if (input[i][j] )
+        for (int i = 0; i < n; i++) {
+            String tmp = br.readLine();
+            for (int j = 0; j < n; j++) {
+                input[i][j] = tmp.charAt(j) == '1';
             }
         }
 
-        return 0;
+        System.out.println(sol(0, 0, n));
+    }
+
+    private static String sol(int x, int y, int len) {
+
+        if (len == 1) {
+            return Integer.toString(input[x][y] ? 1 : 0);
+        }
+
+        int sub = len / 2;
+        String a = sol(x, y, sub);
+        String b = sol(x + sub, y, sub);
+        String c = sol(x, y + sub, sub);
+        String d = sol(x + sub, y + sub, sub);
+
+        if (a.equals(b)
+                && b.equals(c)
+                && c.equals(d)) {
+            return a;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("(");
+
+        sb.append(a).append(b).append(c).append(d);
+
+        sb.append(")");
+        return sb.toString();
+
     }
 }
