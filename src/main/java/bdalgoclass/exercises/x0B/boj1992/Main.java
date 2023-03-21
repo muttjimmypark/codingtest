@@ -24,32 +24,31 @@ public class Main {
 
         System.out.println(sol(0, 0, n));
     }
-
     private static String sol(int x, int y, int len) {
 
+        boolean start = input[x][y];
+
         if (len == 1) {
-            return Integer.toString(input[x][y] ? 1 : 0);
-        }
-
-        int sub = len / 2;
-        String a = sol(x, y, sub);
-        String b = sol(x + sub, y, sub);
-        String c = sol(x, y + sub, sub);
-        String d = sol(x + sub, y + sub, sub);
-
-        if (a.equals(b)
-                && b.equals(c)
-                && c.equals(d)) {
-            return a;
+            return Integer.toString(start ? 1 : 0);
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("(");
+        for (int i = x; i < x + len; i++) {
+            for (int j = y; j < y + len; j++) {
 
-        sb.append(a).append(b).append(c).append(d);
+                if (start != input[i][j]) {
+                    int sub = len / 2;
+                    sb.append("(")
+                            .append(sol(x, y, sub))
+                            .append(sol(x, y + sub, sub))
+                            .append(sol(x + sub, y, sub))
+                            .append(sol(x + sub, y + sub, sub))
+                            .append(")");
+                    return sb.toString();
+                }
+            }
+        }
 
-        sb.append(")");
-        return sb.toString();
-
+        return Integer.toString(start ? 1 : 0);
     }
 }
